@@ -1,19 +1,16 @@
-// Last updated: 29/03/2025, 00:30:54
+// Last updated: 29/03/2025, 10:00:30
 class Solution {
-    public String mergeAlternately(String word1, String word2) {
-        int i = 0;
-        int j = 0;
+    public String gcdOfStrings(String str1, String str2) {
+        if(!(str1 + str2).equals(str2+str1)) return "";
+        int length = gcd(str1.length(), str2.length());
+        return str1.substring(0, length);
+    }
 
-        StringBuilder sb = new StringBuilder();
-        while(i < word1.length() || j < word2.length()){
-            if(i < word1.length()){
-                sb.append(word1.charAt(i++));
-            }
-
-            if(j < word2.length()){
-                sb.append(word2.charAt(j++));
-            }
+    public static int gcd(int x, int y){
+        if(y == 0) {
+            return Math.abs(x);
+        }else{
+            return gcd(y, x % y);
         }
-        return sb.toString();
     }
 }
