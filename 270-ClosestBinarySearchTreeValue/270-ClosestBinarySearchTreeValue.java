@@ -1,4 +1,4 @@
-// Last updated: 03/04/2025, 00:08:06
+// Last updated: 03/04/2025, 00:39:28
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -16,29 +16,25 @@
  */
 class Solution {
     public int closestValue(TreeNode root, double target) {
-        //get inorder traversal array
-        //calculate the remainder and get the smallest
-        List<Integer> nums = new ArrayList();
-        inorder(root,nums);
-
-        int closest = nums.get(0);
-        double minDiff = Math.abs(closest - target);
-       
-        for(int num: nums){
-            double diff = Math.abs(num - target);
-            if(diff < minDiff){
-                minDiff = diff;
-                closest = num;
-            }
-            
+      int closest = root.val;
+      TreeNode current = root;
+      while( current != null){
+        //update the closest if we get the smaller value
+        double curDiff = Math.abs(current.val - target);
+        double closeDiff = Math.abs(closest - target);
+        if(curDiff < closeDiff || (curDiff == closeDiff && current.val < closest)){
+            closest = current.val;
         }
-        return closest;
+        if(current.val == target) return current.val;
+
+        if(target < current.val){
+            current = current.left;
+        }else{
+            current = current.right;
+        }
+      }
+      return closest;
         
     }
-    public void inorder(TreeNode root, List<Integer> nums){
-        if(root == null) return;
-        inorder(root.left, nums);
-        nums.add(root.val);
-        inorder(root.right, nums);
-    }
+    
 }
