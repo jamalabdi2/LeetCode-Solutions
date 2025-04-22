@@ -1,41 +1,41 @@
-// Last updated: 22/04/2025, 12:19:24
+// Last updated: 22/04/2025, 12:21:26
 class Solution {
-    public int maximumGap(int[] arr) {
-        sortArr(arr);
-        int max = 0;
-        for(int i = 1; i < arr.length; i++){
-            max = Math.max(max, arr[i] - arr[i - 1]);
+public:
+    void countSort(vector<int> &nums,int n,int exp){
+        int output[n];
+        int i,count[10] = {0};
+        for(i=0;i<n;i++)
+            count[(nums[i]/exp)%10]++;
+        for(i=1;i<10;i++)
+            count[i] += count[i-1];
+        for(i=n-1;i>=0;i--){
+            output[count[(nums[i]/exp)%10]-1] = nums[i];
+            count[(nums[i]/exp)%10]--;
         }
-        return max;
-    }
-    public static void sortArr(int[] arr){
-        int maxNum = Arrays.stream(arr).max().getAsInt();
-        for(int exp = 1; maxNum / exp > 0; exp *= 10){
-            countingSort(arr, exp);
+        for(int i=0;i<n;i++){
+            nums[i] = output[i];
         }
     }
-    public static void countingSort(int[] arr, int exp){
-        int n  = arr.length;
-        int[] output = new int[n];
-        int[] count = new int[10];
-
-        for(int i = 0; i < n; i++){
-            int digit = (arr[i] / exp) % 10;
-            count[digit]++;
+    int getMax(vector<int>nums,int n){
+        int mx = nums[0];
+        for(int i=1;i<n;i++){
+            if(nums[i]>mx)
+                mx = nums[i];
+        }
+        return mx;
+    }
+    int maximumGap(vector<int>& nums) {
+        if(nums.size()<2)   return 0;
+        int n = nums.size();
+        int m = getMax(nums,n);
+        for(int exp = 1;m/exp;exp*=10){
+            countSort(nums,n,exp);
         }
         
-        for(int i = 1; i < count.length; i++){
-            count[i] += count[i - 1];
+        int mx = INT_MIN;
+        for(int i=0;i<nums.size()-1;i++){
+            mx = max(nums[i+1]-nums[i],mx);
         }
-        
-        for(int i = n - 1; i >= 0; i--){
-            int digit = (arr[i] / exp) % 10;
-            int index = count[digit] - 1;
-            output[index] = arr[i];
-            count[digit]--;
-        }
-        // output[i] = arr[i] System.arraycopy()
-        System.arraycopy(output, 0, arr, 0, n);
- }
-
-}
+        return mx;
+    }
+};
