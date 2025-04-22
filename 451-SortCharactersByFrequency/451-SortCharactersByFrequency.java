@@ -1,13 +1,13 @@
-// Last updated: 22/04/2025, 15:42:09
+// Last updated: 22/04/2025, 15:45:02
 class Solution {
     public int firstUniqChar(String s) {
-        int[] freq = new int[26];
+        HashMap<Character, Integer> map = new HashMap<>();
         for(char c: s.toCharArray()){
-            freq[c - 'a']++;
+            map.put(c, map.getOrDefault(c, 0) + 1);
         }
-        for(int i = 0; i < s.length(); i++){
-            int index = s.charAt(i) - 'a';
-            if(freq[index] == 1){
+        for(int i = 0; i<s.length(); i++){
+            char c = s.charAt(i);
+            if(map.get(c) == 1){
                 return i;
             }
         }
