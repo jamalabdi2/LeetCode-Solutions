@@ -1,19 +1,18 @@
-// Last updated: 28/04/2025, 11:49:29
+// Last updated: 28/04/2025, 11:50:52
 class NumArray {
-    int[] prefix;
+    int[] nums;
     int n;
     public NumArray(int[] nums) {
-        this.prefix = new int[nums.length];
         this.n = nums.length;
-        this.prefix[0] = nums[0];
+        this.nums = nums;
         for(int i = 1; i < nums.length; i++){
-            prefix[i] = prefix[i - 1] + nums[i];
+            nums[i] = nums[i - 1] + nums[i];
         }
     }
     
     public int sumRange(int left, int right) {
-        int leftSum = (left == 0) ? 0 : prefix[left - 1];
-        int rightSum = prefix[right];
+        int leftSum = (left == 0) ? 0 : nums[left - 1];
+        int rightSum = nums[right];
         return rightSum - leftSum;
     }
 }
