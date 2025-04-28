@@ -1,4 +1,4 @@
-// Last updated: 28/04/2025, 12:10:42
+// Last updated: 28/04/2025, 12:18:11
 class Solution {
     public int waysToSplitArray(int[] nums) {
         int n = nums.length;
